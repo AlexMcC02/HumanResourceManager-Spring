@@ -16,8 +16,8 @@ public class Application {
     @Bean
     public CommandLineRunner seedDatabase(EmployeeRepository repository) {
         return args -> {
-            repository.save(new Employee("Alice", "Smith", "Developer", 50000));
-            repository.save(new Employee("Bob", "Johnson", "Designer", 45000));
+            repository.save(new Employee("Alice", "Smith", Band.ASSOCIATE, "Developer", 50000));
+            repository.save(new Employee("Bob", "Johnson", Band.MANAGER, "Designer", 45000));
         };
     }
 }

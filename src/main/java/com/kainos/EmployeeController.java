@@ -33,6 +33,7 @@ public class EmployeeController {
         return employeeRepository.findById(id).map(employee -> {
             employee.setFirstName(updatedEmployee.getFirstName());
             employee.setLastName(updatedEmployee.getLastName());
+            employee.setBand(updatedEmployee.getBand());
             employee.setJobRole(updatedEmployee.getJobRole());
             employee.setSalary(updatedEmployee.getSalary());
             return employeeRepository.save(employee);

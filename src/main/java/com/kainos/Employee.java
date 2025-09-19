@@ -13,6 +13,8 @@ public class Employee {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Column(name = "band", nullable = false)
+    private Band band;
     @Column(name = "job_role", nullable = false)
     private String jobRole;
     @Column(name = "salary", nullable = false)
@@ -20,9 +22,10 @@ public class Employee {
 
     public Employee() {}
 
-    public Employee(String firstName, String lastName, String jobRole, int salary) {
+    public Employee(String firstName, String lastName, Band band, String jobRole, int salary) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.band = band;
         this.jobRole = jobRole;
         this.salary = salary;
     }
@@ -41,6 +44,14 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Band getBand() {
+        return band;
+    }
+
+    public void setBand(Band band) {
+        this.band = band;
     }
 
     public String getJobRole() {
@@ -63,7 +74,7 @@ public class Employee {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return salary == employee.salary && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(jobRole, employee.jobRole);
+        return salary == employee.salary && Objects.equals(id, employee.id) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && band == employee.band && Objects.equals(jobRole, employee.jobRole);
     }
 
     @Override
