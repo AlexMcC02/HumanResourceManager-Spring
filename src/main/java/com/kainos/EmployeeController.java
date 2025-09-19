@@ -10,38 +10,29 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
-
+    private EmployeeService employeeService;
     @GetMapping
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
     public Employee getEmployeeById(@PathVariable Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found with supplied ID!"));
+        return employeeService.getEmployeeById(id);
     }
 
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+        return employeeService.createEmployee(employee);
     }
 
     @PutMapping("/{id}")
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
-        return employeeRepository.findById(id).map(employee -> {
-            employee.setFirstName(updatedEmployee.getFirstName());
-            employee.setLastName(updatedEmployee.getLastName());
-            employee.setBand(updatedEmployee.getBand());
-            employee.setJobRole(updatedEmployee.getJobRole());
-            employee.setSalary(updatedEmployee.getSalary());
-            return employeeRepository.save(employee);
-        }).orElseThrow(() -> new RuntimeException("Employee not found with id " + id));
+        return employeeService.updateEmployee(id, updatedEmployee);
     }
 
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable Long id) {
-        employeeRepository.deleteById(id);
+        employeeService.deleteEmployee(id);
     }
 }
