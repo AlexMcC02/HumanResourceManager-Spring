@@ -1,9 +1,8 @@
 package com.kainos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/employees")
@@ -11,9 +10,23 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public PageResponse<Employee> getAllEmployees(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<Employee> employeePage = employeeService.getAllEmployees(page, size);
+
+        PageResponse<Employee> response = new PageResponse<>();
+        response.setContent(employeePage.getContent());
+        response.setPageNumber(employeePage.getNumber());
+        response.setPageSize(employeePage.getSize());
+        response.setTotalElements(employeePage.getTotalElements());
+        response.setTotalPages(employeePage.getTotalPages());
+        response.setLast(employeePage.isLast());
+
+        return response;
     }
 
     @GetMapping("/{id}")
