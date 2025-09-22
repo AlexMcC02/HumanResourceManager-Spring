@@ -21,12 +21,20 @@ public class EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Employee not found with supplied ID!"));
     }
 
-    public Employee createEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public void createEmployee(EmployeeDTO employeeDTO) {
+        var employeeToCreate = new Employee(
+                employeeDTO.getFirstName(),
+                employeeDTO.getLastName(),
+                employeeDTO.getBand(),
+                employeeDTO.getJobRole(),
+                employeeDTO.getSalary()
+        );
+
+        employeeRepository.save(employeeToCreate);
     }
 
-    public Employee updateEmployee(Long id, Employee updatedEmployee) {
-        return employeeRepository.findById(id).map(employee -> {
+    public void updateEmployee(Long id, EmployeeDTO updatedEmployee) {
+        employeeRepository.findById(id).map(employee -> {
             employee.setFirstName(updatedEmployee.getFirstName());
             employee.setLastName(updatedEmployee.getLastName());
             employee.setBand(updatedEmployee.getBand());
