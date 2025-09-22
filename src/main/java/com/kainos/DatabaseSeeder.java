@@ -10,7 +10,7 @@ import java.util.Random;
 public class DatabaseSeeder {
 
     @Bean
-    public CommandLineRunner seedDatabase(EmployeeRepository repository) {
+    public CommandLineRunner seedDatabase(EmployeeRepository employeeRepository, UserRepository userRepository) {
         return args -> {
             Random rand = new Random();
             String[] firstNames = {"Alex", "Stephen", "Jacob", "Mary", "Bob", "Alice", "Karen", "Samuel", "Lee", "Dylan"};
@@ -22,8 +22,8 @@ public class DatabaseSeeder {
             final int MIN_SALARY_FACTOR = 19;
             final int MAX_SALARY_FACTOR = 450;
 
-            for (var employee : repository.findAll()) {
-                repository.delete(employee);
+            for (var employee : employeeRepository.findAll()) {
+                employeeRepository.delete(employee);
             }
 
             for (var i = 0; i < NUM_TO_CREATE; i++) {
@@ -33,8 +33,10 @@ public class DatabaseSeeder {
                 String jobRole = jobRoles[rand.nextInt(0, jobRoles.length - 1)];
                 int salary = rand.nextInt(MIN_SALARY_FACTOR, MAX_SALARY_FACTOR) * 1000;
 
-                repository.save(new Employee(firstName, lastName, band, jobRole, salary));
+                employeeRepository.save(new Employee(firstName, lastName, band, jobRole, salary));
             }
+
+            userRepository.save(new User("alexmcc", "password"));
         };
     }
 }
