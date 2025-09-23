@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final Key key = Keys.hmacShaKeyFor("my-very-secret-256-bit-secret-key".getBytes());
+    private final Key key = Keys.hmacShaKeyFor("my-256-bit-very-super-duper-secret-key-that-is-very-secure".getBytes());
 
     public String generateJwtToken(String username) {
         return Jwts.builder()
